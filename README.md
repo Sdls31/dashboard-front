@@ -1,30 +1,23 @@
-# React + TypeScript + Vite
+![image](https://github.com/Sdls31/eCommerce-React/assets/127796900/6fb4b3b1-45b7-481c-a1d6-98bc58258668)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+# src/
+Se encuentra la estructura de nuestra app.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+# src/assets
+Están las imagenes que se usaran en la app.
 
-## Expanding the ESLint configuration
+# src/components
+Están todos los componentes, divididos por hijos de secciones y secciones, con hijos de secciones me refiero a estas partes que se repiten dentro de una seccion, como las tarjetas en la seccion "problike.tsx". Enseguida tenemos las paginas principales, como Home.tsx y navigation.tsx.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# src/design
+Encontrarán los hooks o funciones que nos ayudan dentro de nuestra app, en este caso tenemos un hook que nos ayuda a determinar si estamos en telefono o computadora, para diseños responsivos.
 
-- Configure the top-level `parserOptions` property like this:
+# src/routes
+Encontraran las rutas de nuestra app, es decir los endpoints de nuestro frontend.
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Los demás archivos son propios de una app con React - TypeScript. App.tsx contiene toda la aplicacion y las rutas, Main.tsx encierra la app por completo.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+Se utilizan librerias como @mui/material.
+
+Para inicializar nuestra app, es importante utilizar el comando "yarn" para asi instalar las dependencias, en caso de querer instalar una libreria, se utiliza "yarn add (nombrelibreria)" y para correr es "yarn dev".
