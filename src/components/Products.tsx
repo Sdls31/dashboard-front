@@ -45,13 +45,13 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
-const Home: React.FC<Props> = ({ data }) => {
-  const location = useLocation();
-  const { order } = location.state;
+const Products: React.FC<Props> = ({ data }) => {
+  //   const location = useLocation();
+  //   const { order } = location.state;
   return (
     <Container sx={{ padding: "8rem 0 0 0" }}>
       <Typography fontFamily={"Inter"} color={"#FF0101"} fontWeight={900}>
-        Client <span style={{ color: "#1C1C1C" }}>/ {order.id}</span>
+        Client <span style={{ color: "#1C1C1C" }}>/ </span>
       </Typography>
       <Box
         sx={{
@@ -236,4 +236,4 @@ const Home: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default Home;
+export default Products;

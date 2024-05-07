@@ -45,13 +45,13 @@ const rows = [
   createData("Gingerbread", 356, 16.0, 49, 3.9),
 ];
 
-const Home: React.FC<Props> = ({ data }) => {
-  const location = useLocation();
-  const { order } = location.state;
+const Orders: React.FC<Props> = ({ data }) => {
+  //   const location = useLocation();
+  //   const { order } = location.state;
   return (
     <Container sx={{ padding: "8rem 0 0 0" }}>
       <Typography fontFamily={"Inter"} color={"#FF0101"} fontWeight={900}>
-        Client <span style={{ color: "#1C1C1C" }}>/ {order.id}</span>
+        Client <span style={{ color: "#1C1C1C" }}>/ </span>
       </Typography>
       <Box
         sx={{
@@ -122,63 +122,7 @@ const Home: React.FC<Props> = ({ data }) => {
       >
         <Box
           sx={{
-            width: "25%",
-            display: "flex",
-            padding: "1.5rem",
-            borderRadius: "1rem",
-            boxShadow: "0 0 10px #D9D9D9",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Box
-            sx={{
-              display: "flex",
-              width: "90%",
-              flexDirection: "column",
-            }}
-          >
-            <AccountCircleIcon
-              sx={{ width: "10rem", height: "5rem", alignSelf: "center" }}
-            />
-            <Typography
-              fontFamily={"Inter"}
-              fontWeight={600}
-              textAlign={"center"}
-            >
-              Nombre Cliente
-            </Typography>
-            <Typography
-              fontFamily={"Inter"}
-              fontWeight={100}
-              textAlign={"center"}
-              fontSize={12.5}
-            >
-              Correo Cliente
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Typography fontFamily={"Inter"}>Group</Typography>
-              <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                Datos
-              </Typography>
-              <Typography fontFamily={"Inter"}>Ubicacion</Typography>
-              <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                DatosUbicacion
-              </Typography>
-              <Typography fontFamily={"Inter"}>Primer pedido</Typography>
-              <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                Datospedido
-              </Typography>
-              <Typography fontFamily={"Inter"}>Cantidad</Typography>
-              <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                DatosCantidad
-              </Typography>
-            </Box>
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            width: "65%",
+            width: "100%",
             display: "flex",
             padding: "1rem",
             borderRadius: "1rem",
@@ -236,4 +180,4 @@ const Home: React.FC<Props> = ({ data }) => {
   );
 };
 
-export default Home;
+export default Orders;
