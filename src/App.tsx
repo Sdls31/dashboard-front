@@ -5,6 +5,7 @@ function App() {
   return (
     <>
       <Container
+      disableGutters
         sx={{
           display: "flex",
           flexDirection: "column",

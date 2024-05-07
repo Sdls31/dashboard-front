@@ -1,6 +1,7 @@
 import {
   AppBar,
   Box,
+  Button,
   Container,
   IconButton,
   Toolbar,
@@ -9,6 +10,10 @@ import {
 import React from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
+
+const Pages = ["Ordenes", "Clientes", "Productos"];
+
+const handleButtonEvent = (selectedPage: string) => {};
 
 const NavBar = () => {
   return (
@@ -54,11 +59,24 @@ const NavBar = () => {
                 alignItems: "center",
               }}
             >
-              <Typography
+              {Pages.map((item, index) => {
+                return (
+                  <Button key={index} value={item}>
+                    <Typography
+                      fontFamily={"Inter"}
+                      fontWeight={700}
+                      color={"#0F0F0F"}
+                      textTransform={"capitalize"}
+                    >
+                      {item}
+                    </Typography>
+                  </Button>
+                );
+              })}
+              {/* <Typography
                 fontFamily={"Inter"}
                 fontWeight={1000}
                 color={"#0F0F0F"}
-                sx={{ display: "flex" }}
               >
                 Ventas
               </Typography>
@@ -77,7 +95,7 @@ const NavBar = () => {
                 sx={{ display: "flex" }}
               >
                 Productos
-              </Typography>
+              </Typography> */}
               <IconButton>
                 <AccountCircleIcon sx={{ color: "#0F0F0F" }} />
               </IconButton>
