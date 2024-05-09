@@ -81,6 +81,9 @@ const OrdersGrid = () => {
     //   })}
     // </Container>
     <Container sx={{ padding: "5rem" }}>
+      <Typography fontFamily={"Inter"} fontSize={"2rem"} fontWeight={800}>
+        Listado de Clientes
+      </Typography>
       {client.map((client: Client) => {
         const filteredOrders = order.filter(
           (order) => order.client_id === client.id

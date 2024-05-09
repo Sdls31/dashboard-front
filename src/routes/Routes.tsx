@@ -4,7 +4,9 @@ import NavBar from "../components/NavBar";
 import OrdersGrid from "../components/OrdersGrid";
 import Products from "../components/Products";
 import Orders from "../components/Orders";
-import LogIn from "../components/LogIn";
+import CreateOrder from "../components/createOrder";
+import CreateClient from "../components/createClient";
+import CreateProduct from "../components/createProduct";
 const PagesRoutes = () => {
   return (
     <>
@@ -14,7 +16,9 @@ const PagesRoutes = () => {
         <Route path="/" element={<OrdersGrid />} />
         <Route path="/Products" element={<Products />} />
         <Route path="/Orders" element={<Orders />} />
-        <Route path="/login" element={<LogIn />} />
+        <Route path="/createorder" element={<CreateOrder />} />
+        <Route path="/createclient" element={<CreateClient />} />
+        <Route path="/createproduct" element={<CreateProduct />} />
       </Routes>
     </>
   );

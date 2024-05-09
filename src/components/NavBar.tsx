@@ -14,10 +14,19 @@ import { useNavigate } from "react-router-dom";
 
 const Pages = ["Ordenes", "Clientes", "Productos"];
 
-const handleButtonEvent = (selectedPage: string) => {};
-
 const NavBar = () => {
   const navigate = useNavigate();
+  const handleButtonEvent = (selectedPage: string) => {
+    if (selectedPage == "Ordenes") {
+      navigate("/createorder");
+    }
+    if (selectedPage == "Clientes") {
+      navigate("/createclient");
+    }
+    if (selectedPage == "Productos") {
+      navigate("/createproduct");
+    }
+  };
 
   return (
     <AppBar
@@ -48,11 +57,18 @@ const NavBar = () => {
             }}
           >
             <Box sx={{ display: "flex", width: "50%" }}>
-              <img
-                src="src\assets\logo-profile-pic.webp"
-                alt="logo-profile-pic"
-                style={{ width: "4rem" }}
-              />
+              <IconButton
+                sx={{ width: "3rem", height: "3rem" }}
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                <img
+                  src="src\assets\logo-profile-pic.webp"
+                  alt="logo-profile-pic"
+                  style={{ width: "4rem" }}
+                />
+              </IconButton>
             </Box>
             <Box
               sx={{
@@ -64,7 +80,13 @@ const NavBar = () => {
             >
               {Pages.map((item, index) => {
                 return (
-                  <Button key={index} value={item}>
+                  <Button
+                    key={index}
+                    value={item}
+                    onClick={() => {
+                      handleButtonEvent(item);
+                    }}
+                  >
                     <Typography
                       fontFamily={"Inter"}
                       fontWeight={700}
@@ -112,7 +134,7 @@ const NavBar = () => {
               alignItems: "center",
             }}
           >
-            <IconButton >
+            <IconButton>
               <MenuIcon sx={{ color: "#0F0F0F" }} />
             </IconButton>
             <img
