@@ -35,7 +35,7 @@ const OrdersGrid = () => {
         <Button
           key={order.id}
           onClick={() => {
-            navigate("/Home", { state: { order } });
+            navigate("/Clients", { state: { order } });
           }}
         >
           <Typography

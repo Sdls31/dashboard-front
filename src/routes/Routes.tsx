@@ -4,6 +4,7 @@ import NavBar from "../components/NavBar";
 import OrdersGrid from "../components/OrdersGrid";
 import Products from "../components/Products";
 import Orders from "../components/Orders";
+import LogIn from "../components/LogIn";
 const PagesRoutes = () => {
   return (
     <>
@@ -13,6 +14,7 @@ const PagesRoutes = () => {
         <Route path="/" element={<OrdersGrid />} />
         <Route path="/Products" element={<Products />} />
         <Route path="/Orders" element={<Orders />} />
+        <Route path="/login" element={<LogIn />} />
       </Routes>
     </>
   );

@@ -10,12 +10,15 @@ import {
 import React from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate } from "react-router-dom";
 
 const Pages = ["Ordenes", "Clientes", "Productos"];
 
 const handleButtonEvent = (selectedPage: string) => {};
 
 const NavBar = () => {
+  const navigate = useNavigate();
+
   return (
     <AppBar
       position="fixed"
@@ -96,7 +99,7 @@ const NavBar = () => {
               >
                 Productos
               </Typography> */}
-              <IconButton>
+              <IconButton onClick={() => navigate("/login")}>
                 <AccountCircleIcon sx={{ color: "#0F0F0F" }} />
               </IconButton>
             </Box>
@@ -109,7 +112,7 @@ const NavBar = () => {
               alignItems: "center",
             }}
           >
-            <IconButton>
+            <IconButton >
               <MenuIcon sx={{ color: "#0F0F0F" }} />
             </IconButton>
             <img
@@ -117,7 +120,7 @@ const NavBar = () => {
               alt="logo-profile-pic"
               style={{ width: "4rem" }}
             />
-            <IconButton>
+            <IconButton onClick={() => navigate("/login")}>
               <AccountCircleIcon sx={{ color: "#0F0F0F" }} />
             </IconButton>
           </Box>
