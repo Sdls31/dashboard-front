@@ -47,11 +47,15 @@ const rows = [
 
 const Home: React.FC<Props> = ({ data }) => {
   const location = useLocation();
-  const { order } = location.state;
+  const { client, filteredOrders, filteredProducts } = location.state;
+
   return (
     <Container sx={{ padding: "8rem 0 0 0" }}>
       <Typography fontFamily={"Inter"} color={"#FF0101"} fontWeight={900}>
-        Client <span style={{ color: "#1C1C1C" }}>/ {order.id}</span>
+        Client{" "}
+        <span style={{ color: "#1C1C1C" }}>
+          / {client.name} {client.lastname}
+        </span>
       </Typography>
       <Box
         sx={{
@@ -73,7 +77,7 @@ const Home: React.FC<Props> = ({ data }) => {
             maxHeight: "1.156rem",
           }}
         >
-          <Typography fontFamily={"Inter"}>Cantidad</Typography>
+          <Typography fontFamily={"Inter"}>{filteredOrders.length}</Typography>
         </Box>
         <Box
           sx={{
