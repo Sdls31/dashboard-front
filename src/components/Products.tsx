@@ -15,6 +15,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useLocation } from "react-router-dom";
+import { BarChart } from "@mui/x-charts";
 interface Order {
   id: number;
   created_at: Date;
@@ -37,17 +38,25 @@ function createData(
   return { name, calories, fat, carbs, protein };
 }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
 const Products: React.FC<Props> = ({ data }) => {
   const location = useLocation();
   const { product, filteredOrders } = location.state;
+  const [count, setCount] = useState<number>(0);
+  const [processedData, setProcessed] = useState<number>(0);
+
+  const cont = () => {
+    let variable = 0;
+
+    filteredOrders.map((item: any) => {
+      variable = variable + item.quantity;
+    });
+    return variable;
+  };
+  useEffect(() => {
+    const data_count = cont();
+    setCount(data_count);
+  }, []);
+
   return (
     <Container sx={{ padding: "8rem 0 0 0" }}>
       <Typography fontFamily={"Inter"} color={"#FF0101"} fontWeight={900}>
@@ -70,10 +79,13 @@ const Products: React.FC<Props> = ({ data }) => {
             borderRadius: "1rem",
             boxShadow: "0 0 10px #D9D9D9",
             padding: "2.5rem",
-            maxHeight: "1.156rem",
+            maxHeight: "2rem",
           }}
         >
-          <Typography fontFamily={"Inter"}>Cantidad</Typography>
+          <Typography fontFamily={"Inter"} fontSize={13}>
+            Cantidad de ordenes: <br />
+            <span style={{ fontWeight: "700" }}>{filteredOrders.length}</span>
+          </Typography>
         </Box>
         <Box
           sx={{
@@ -81,10 +93,27 @@ const Products: React.FC<Props> = ({ data }) => {
             borderRadius: "1rem",
             boxShadow: "0 0 10px #D9D9D9",
             padding: "2.5rem",
-            maxHeight: "1.156rem",
+            maxHeight: "2rem",
           }}
         >
-          <Typography fontFamily={"Inter"}>Producto Creado</Typography>
+          {filteredOrders[0] ? (
+            <Typography fontFamily={"Inter"} fontSize={13}>
+              Cliente mas frecuente:
+              <br />
+              <span style={{ fontWeight: "700" }}>
+                {filteredOrders[0].client_name}
+              </span>
+            </Typography>
+          ) : (
+            <Typography
+              fontFamily={"Inter"}
+              fontSize={13}
+              fontStyle={"italic"}
+              fontWeight={900}
+            >
+              Haz un pedido antes
+            </Typography>
+          )}
         </Box>
         <Box
           sx={{
@@ -92,10 +121,27 @@ const Products: React.FC<Props> = ({ data }) => {
             borderRadius: "1rem",
             boxShadow: "0 0 10px #D9D9D9",
             padding: "2.5rem",
-            maxHeight: "1.156rem",
+            maxHeight: "2rem",
           }}
         >
-          <Typography fontFamily={"Inter"}>Fecha</Typography>
+          {filteredOrders[0] ? (
+            <Typography fontFamily={"Inter"} fontSize={13}>
+              Primer pedido:
+              <br />
+              <span style={{ fontWeight: "700" }}>
+                {filteredOrders[0].created_at}
+              </span>
+            </Typography>
+          ) : (
+            <Typography
+              fontFamily={"Inter"}
+              fontSize={13}
+              fontStyle={"italic"}
+              fontWeight={900}
+            >
+              Haz un pedido antes
+            </Typography>
+          )}
         </Box>
         <Box
           sx={{
@@ -103,10 +149,27 @@ const Products: React.FC<Props> = ({ data }) => {
             borderRadius: "1rem",
             boxShadow: "0 0 10px #D9D9D9",
             padding: "2.5rem",
-            maxHeight: "1.156rem",
+            maxHeight: "wrem",
           }}
         >
-          <Typography fontFamily={"Inter"}>Ganancias</Typography>
+          {filteredOrders[0] ? (
+            <Typography fontFamily={"Inter"} fontSize={13}>
+              Total:
+              <br />
+              <span style={{ fontWeight: "700" }}>
+                $ {count * product.price}
+              </span>
+            </Typography>
+          ) : (
+            <Typography
+              fontFamily={"Inter"}
+              fontSize={13}
+              fontStyle={"italic"}
+              fontWeight={900}
+            >
+              Haz un pedido antes
+            </Typography>
+          )}
         </Box>
       </Box>
       <Box
@@ -138,15 +201,16 @@ const Products: React.FC<Props> = ({ data }) => {
               flexDirection: "column",
             }}
           >
-            <AccountCircleIcon
-              sx={{ width: "10rem", height: "5rem", alignSelf: "center" }}
+            <img
+              src="src\assets\carrito-de-supermercado (1).png"
+              style={{ width: "5rem", alignSelf: "center" }}
             />
             <Typography
               fontFamily={"Inter"}
               fontWeight={600}
               textAlign={"center"}
             >
-              Nombre Cliente
+              {product.name}
             </Typography>
             <Typography
               fontFamily={"Inter"}
@@ -154,39 +218,29 @@ const Products: React.FC<Props> = ({ data }) => {
               textAlign={"center"}
               fontSize={12.5}
             >
-              Correo Cliente
+              Mermelada
+            </Typography>
+            <Typography fontFamily={"Inter"}>Id de producto</Typography>
+            <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
+              {product.id}
             </Typography>
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Typography fontFamily={"Inter"}>Group</Typography>
+              <Typography fontFamily={"Inter"}>Sabor</Typography>
               <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                Datos
+                {product.flavour}
               </Typography>
-              <Typography fontFamily={"Inter"}>Ubicacion</Typography>
+              <Typography fontFamily={"Inter"}>Stock</Typography>
               <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                DatosUbicacion
+                {product.stock}
               </Typography>
-              <Typography fontFamily={"Inter"}>Primer pedido</Typography>
+              <Typography fontFamily={"Inter"}>Precio</Typography>
               <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                Datospedido
-              </Typography>
-              <Typography fontFamily={"Inter"}>Cantidad</Typography>
-              <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                DatosCantidad
+                $ {product.price}
               </Typography>
             </Box>
           </Box>
         </Box>
-        <Box
-          sx={{
-            width: "65%",
-            display: "flex",
-            padding: "1rem",
-            borderRadius: "1rem",
-            boxShadow: "0 0 10px #D9D9D9",
-          }}
-        >
-          Hola
-        </Box>
+
         <Box
           sx={{
             width: "100%",
@@ -214,12 +268,10 @@ const Products: React.FC<Props> = ({ data }) => {
               <TableBody>
                 {filteredOrders.map((row: any) => (
                   <TableRow
-                    key={row.name}
+                    key={row.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="left">
-                      {row.client_name}
-                    </TableCell>
+                    <TableCell align="left">{row.client_name}</TableCell>
                     <TableCell align="left">{row.quantity}</TableCell>
                     <TableCell align="left">{row.details}</TableCell>
                     <TableCell align="left">{row.address}</TableCell>

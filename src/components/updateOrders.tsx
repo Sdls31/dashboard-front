@@ -24,6 +24,7 @@ const UpdateOrders = () => {
   const [address, setAddress] = useState<string>("");
   const [id_order, setIdOrder] = useState<string>("");
   const [message, setMessage] = useState<string | any>("");
+  const navigate = useNavigate();
 
   const registerOrder = async () => {
     const response = await axios.patch(
@@ -36,6 +37,7 @@ const UpdateOrders = () => {
     );
     console.log(response.data.message);
     setMessage(response);
+    navigate("/");
   };
 
   // const navigate = useNavigate();

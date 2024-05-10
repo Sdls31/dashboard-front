@@ -29,7 +29,6 @@ interface Props {
   data?: Order;
 }
 
-
 interface Record {
   products_id: string;
   quantity: number;
@@ -38,23 +37,39 @@ interface Record {
 const Home: React.FC<Props> = () => {
   const location = useLocation();
   const { client, filteredOrders, filteredProducts } = location.state;
+  const [countData, setCount] = useState<number>(0);
+  const count = () => {
+    let variable = 0;
+    filteredOrders.map((item: any) => {
+      variable = variable + item.quantity;
+    });
+    return variable;
+  };
 
-  const quantitiesByProductId: Record = filteredOrders.reduce((accumulator:any, order:any) => {
-    const productId: string = order.products_id;
-    const quantity:number = order.quantity;
-  
-    // Si el productId ya está en el acumulador, sumar la cantidad
-    if (accumulator[productId]) {
-      accumulator[productId] += quantity;
-    } else { // Si no está, inicializarlo con la cantidad actual
-      accumulator[productId] = quantity;
-    }
-  
-    return accumulator;
-  }, {});
+  const quantitiesByProductId: Record = filteredOrders.reduce(
+    (accumulator: any, order: any) => {
+      const productId: string = order.products_id;
+      const quantity: number = order.quantity;
+
+      // Si el productId ya está en el acumulador, sumar la cantidad
+      if (accumulator[productId]) {
+        accumulator[productId] += quantity;
+      } else {
+        // Si no está, inicializarlo con la cantidad actual
+        accumulator[productId] = quantity;
+      }
+
+      return accumulator;
+    },
+    {}
+  );
+
+  useEffect(() => {
+    setCount(count());
+  }, []);
 
   const xAxis = Object.keys(quantitiesByProductId);
-  const yAxis = Object.values(quantitiesByProductId)
+  const yAxis = Object.values(quantitiesByProductId);
 
   return (
     <Container sx={{ padding: "8rem 0 0 0" }}>
@@ -81,11 +96,11 @@ const Home: React.FC<Props> = () => {
             borderRadius: "1rem",
             boxShadow: "0 0 10px #D9D9D9",
             padding: "2.5rem",
-            maxHeight: "1.156rem",
+            maxHeight: "2rem",
           }}
         >
-          <Typography fontFamily={"Inter"}>
-            Cantidad de Ordenes:{" "}
+          <Typography fontFamily={"Inter"} fontSize={13}>
+            Cantidad de Ordenes: <br />
             <span style={{ fontWeight: "700" }}>{filteredOrders.length}</span>
           </Typography>
         </Box>
@@ -95,10 +110,15 @@ const Home: React.FC<Props> = () => {
             borderRadius: "1rem",
             boxShadow: "0 0 10px #D9D9D9",
             padding: "2.5rem",
-            maxHeight: "1.156rem",
+            maxHeight: "2rem",
           }}
         >
-          <Typography fontFamily={"Inter"}></Typography>
+          <Typography fontFamily={"Inter"} fontSize={13}>
+            Detalles ultimo pedido:{" "}
+            <span style={{ fontWeight: "700" }}>
+              {filteredOrders[filteredOrders.length - 1].details}
+            </span>
+          </Typography>
         </Box>
         <Box
           sx={{
@@ -106,10 +126,27 @@ const Home: React.FC<Props> = () => {
             borderRadius: "1rem",
             boxShadow: "0 0 10px #D9D9D9",
             padding: "2.5rem",
-            maxHeight: "1.156rem",
+            maxHeight: "2rem",
           }}
         >
-          <Typography fontFamily={"Inter"}>Fecha</Typography>
+          {filteredOrders[0] ? (
+            <Typography fontFamily={"Inter"} fontSize={13}>
+              Primer pedido:
+              <br />
+              <span style={{ fontWeight: "700" }}>
+                {filteredOrders[0].created_at}
+              </span>
+            </Typography>
+          ) : (
+            <Typography
+              fontFamily={"Inter"}
+              fontSize={13}
+              fontStyle={"italic"}
+              fontWeight={900}
+            >
+              Haz un pedido antes
+            </Typography>
+          )}
         </Box>
         <Box
           sx={{
@@ -117,10 +154,13 @@ const Home: React.FC<Props> = () => {
             borderRadius: "1rem",
             boxShadow: "0 0 10px #D9D9D9",
             padding: "2.5rem",
-            maxHeight: "1.156rem",
+            maxHeight: "2rem",
           }}
         >
-          <Typography fontFamily={"Inter"}>Ganancias</Typography>
+          <Typography fontFamily={"Inter"} fontSize={13}>
+            Total: <br />
+            <span style={{ fontWeight: "700" }}>$ {countData * 120}</span>
+          </Typography>
         </Box>
       </Box>
       <Box
@@ -195,16 +235,18 @@ const Home: React.FC<Props> = () => {
             boxShadow: "0 0 10px #D9D9D9",
             flexDirection: "column",
             justifyContent: "center",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
-          <Typography fontFamily={'Inter'}>Cantidad de productos pedidos</Typography>
-           <BarChart
-            xAxis={[{ scaleType:'band', data:  xAxis}]}
-            series={[{ data : yAxis }]}
+          <Typography fontFamily={"Inter"}>
+            Cantidad de productos pedidos
+          </Typography>
+          <BarChart
+            xAxis={[{ scaleType: "band", data: xAxis }]}
+            series={[{ data: yAxis }]}
             width={500}
             height={300}
-          /> 
+          />
         </Box>
         <Box
           sx={{

@@ -132,15 +132,17 @@ const OrdersGrid = () => {
         Listado de Productos
       </Typography>
       {product.map((product: Product) => {
-        const filteredOrders = order.filter((item) => item.products_id === product.id);
+        const filteredOrders = order.filter(
+          (item) => item.products_id === product.id
+        );
         return (
           <Button
             key={product.id}
             onClick={() => {
               console.log(product);
-              console.log(filteredOrders)
+              console.log(filteredOrders);
               navigate("/Products", {
-                state: { product , filteredOrders},
+                state: { product, filteredOrders },
               });
             }}
           >
@@ -149,7 +151,7 @@ const OrdersGrid = () => {
               color={"black"}
               textTransform={"capitalize"}
             >
-              Cliente: {product.name}
+              Producto: {product.name}
             </Typography>
           </Button>
         );

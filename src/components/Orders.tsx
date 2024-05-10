@@ -14,7 +14,7 @@ import {
 import axios from "axios";
 import { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 interface Order {
   id: number;
   created_at: Date;
@@ -30,6 +30,7 @@ interface Props {
 
 const Orders: React.FC<Props> = ({ data }) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const { order } = location.state;
   const imprimir = () => {
     console.log(order);
@@ -79,24 +80,34 @@ const Orders: React.FC<Props> = ({ data }) => {
               <TableBody>
                 {order.map((item: any) => {
                   return (
-                    <TableRow>
+                    <TableRow key={item.id}>
                       <TableCell component="th" scope="row">
                         <Typography fontFamily={"Inter"}>{item.id}</Typography>
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        <Typography fontFamily={"Inter"}>{item.client_name}</Typography>
+                        <Typography fontFamily={"Inter"}>
+                          {item.client_name}
+                        </Typography>
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        <Typography fontFamily={"Inter"}>{item.products_id}</Typography>
+                        <Typography fontFamily={"Inter"}>
+                          {item.products_id}
+                        </Typography>
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        <Typography fontFamily={"Inter"}>{item.details}</Typography>
+                        <Typography fontFamily={"Inter"}>
+                          {item.details}
+                        </Typography>
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        <Typography fontFamily={"Inter"}>{item.address}</Typography>
+                        <Typography fontFamily={"Inter"}>
+                          {item.address}
+                        </Typography>
                       </TableCell>
                       <TableCell component="th" scope="row">
-                        <Typography fontFamily={"Inter"}>{item.created_at}</Typography>
+                        <Typography fontFamily={"Inter"}>
+                          {item.created_at}
+                        </Typography>
                       </TableCell>
                     </TableRow>
                   );
@@ -105,6 +116,30 @@ const Orders: React.FC<Props> = ({ data }) => {
             </Table>
           </TableContainer>
         </Box>
+        <Button
+          variant="contained"
+          onClick={() => navigate("/updateOrders")}
+          sx={{
+            backgroundColor: "#B30000",
+            color: "white",
+          }}
+        >
+          <Typography fontFamily={"Inter"} textTransform={"capitalize"}>
+            Actualizar Orden
+          </Typography>
+        </Button>
+        <Button
+          variant="contained"
+          sx={{
+            backgroundColor: "#B30000",
+            color: "white",
+          }}
+          onClick={() => navigate("/delete")}
+        >
+          <Typography fontFamily={"Inter"} textTransform={"capitalize"}>
+            Eliminar Orden
+          </Typography>
+        </Button>
       </Box>
     </Container>
   );

@@ -22,6 +22,7 @@ import axios from "axios";
 const DeleteUser = () => {
   const [id_order, setID] = useState<string>("");
   const [message, setMessage] = useState<string | any>("");
+  const navigate = useNavigate();
 
   const registerOrder = async () => {
     const response = await axios.delete(
@@ -30,6 +31,7 @@ const DeleteUser = () => {
     );
     console.log(response.data.message);
     setMessage(response);
+    navigate("/");
   };
 
   // const navigate = useNavigate();
@@ -84,11 +86,11 @@ const DeleteUser = () => {
           >
             Registrar
           </Button>
-          {/* {message && (
-                <Typography fontFamily={"Inter"} fontSize={"1rem"}>
-                  {message}
-                </Typography>
-              )} */}
+          {message && (
+            <Typography fontFamily={"Inter"} fontSize={"1rem"}>
+              {message}
+            </Typography>
+          )}
         </Box>
       </Box>
     </Container>
