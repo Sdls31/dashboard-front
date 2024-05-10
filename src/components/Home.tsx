@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useLocation } from "react-router-dom";
 import { BarChart } from "@mui/x-charts/BarChart";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 interface Order {
   id: number;
   created_at: Date;

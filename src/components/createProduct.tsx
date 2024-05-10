@@ -25,6 +25,7 @@ const CreateProduct = () => {
   const [stock, setStock] = useState<number>(0);
   const [price, setPrice] = useState<number>(0);
   const [message, setMessage] = useState<string | any>("");
+  const navigate = useNavigate();
 
   const registerOrder = async () => {
     const data = {
@@ -41,6 +42,7 @@ const CreateProduct = () => {
     );
     console.log(response.data.message);
     setMessage(response);
+    navigate("/");
   };
 
   // const navigate = useNavigate();

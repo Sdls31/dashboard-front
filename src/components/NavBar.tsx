@@ -4,6 +4,8 @@ import {
   Button,
   Container,
   IconButton,
+  Menu,
+  MenuItem,
   Toolbar,
   Typography,
 } from "@mui/material";
@@ -16,6 +18,24 @@ const Pages = ["Ordenes", "Clientes", "Productos"];
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
+    null
+  );
+  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
+    null
+  );
+
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget);
+  };
+  const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null);
+  };
+
   const handleButtonEvent = (selectedPage: string) => {
     if (selectedPage == "Ordenes") {
       navigate("/createorder");
@@ -134,14 +154,47 @@ const NavBar = () => {
               alignItems: "center",
             }}
           >
-            <IconButton>
+            <IconButton onClick={handleOpenNavMenu}>
               <MenuIcon sx={{ color: "#0F0F0F" }} />
             </IconButton>
-            <img
-              src="src\assets\logo-profile-pic.webp"
-              alt="logo-profile-pic"
-              style={{ width: "4rem" }}
-            />
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorElNav}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "left",
+              }}
+              open={Boolean(anchorElNav)}
+              onClose={handleCloseNavMenu}
+              sx={{
+                display: { xs: "block", md: "none" },
+              }}
+            >
+              {Pages.map((page) => (
+                <MenuItem key={page} onClick={() => handleButtonEvent(page)}>
+                  <Typography fontFamily={"Inter"} textAlign="center">
+                    {page}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+            <IconButton
+              sx={{ width: "3rem", height: "3rem" }}
+              onClick={() => {
+                navigate("/");
+              }}
+            >
+              <img
+                src="src\assets\logo-profile-pic.webp"
+                alt="logo-profile-pic"
+                style={{ width: "4rem" }}
+              />
+            </IconButton>
             <IconButton onClick={() => navigate("/login")}>
               <AccountCircleIcon sx={{ color: "#0F0F0F" }} />
             </IconButton>

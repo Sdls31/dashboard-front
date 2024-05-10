@@ -26,6 +26,7 @@ const CreateOrder = () => {
   const [productId, setProductId] = useState<number>(0);
   const [clientId, setClientId] = useState<number>(0);
   const [message, setMessage] = useState<string | any>("");
+  const navigate = useNavigate();
 
   const registerOrder = async () => {
     const data = {
@@ -43,6 +44,7 @@ const CreateOrder = () => {
     );
     console.log(response.data.message);
     setMessage(response);
+    navigate("/");
   };
 
   // const navigate = useNavigate();

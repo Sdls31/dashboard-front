@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useLocation } from "react-router-dom";
 import { BarChart } from "@mui/x-charts";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 interface Order {
   id: number;
   created_at: Date;
@@ -201,9 +202,8 @@ const Products: React.FC<Props> = ({ data }) => {
               flexDirection: "column",
             }}
           >
-            <img
-              src="src\assets\carrito-de-supermercado (1).png"
-              style={{ width: "5rem", alignSelf: "center" }}
+            <ShoppingCartIcon
+              sx={{ width: "10rem", height: "5rem", alignSelf: "center" }}
             />
             <Typography
               fontFamily={"Inter"}
