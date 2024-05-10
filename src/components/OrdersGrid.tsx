@@ -19,7 +19,6 @@ interface Order {
   details: string;
   created_at: Date;
   updated_at: Date;
-  total?: number;
 }
 interface Product {
   id: number;
@@ -33,6 +32,7 @@ const OrdersGrid = () => {
   const [order, setOrder] = useState<Order[]>([]);
   const [product, setProduct] = useState<Product[]>([]);
   const navigate = useNavigate();
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -55,6 +55,7 @@ const OrdersGrid = () => {
 
     getData();
   }, []);
+
   return (
     // <Container sx={{ padding: "5rem" }}>
     //   {client.map((client: Client) => {
@@ -95,6 +96,7 @@ const OrdersGrid = () => {
           <Button
             key={client.id}
             onClick={() => {
+              console.log(filteredOrders);
               console.log(filteredProducts);
               navigate("/Clients", {
                 state: { client, filteredOrders, filteredProducts },
@@ -107,6 +109,47 @@ const OrdersGrid = () => {
               textTransform={"capitalize"}
             >
               Cliente: {client.name} {client.lastname}
+            </Typography>
+          </Button>
+        );
+      })}
+      <Typography fontFamily={"Inter"} fontSize={"2rem"} fontWeight={800}>
+        Listado de Ordenes
+      </Typography>
+
+      <Button
+        onClick={() => {
+          navigate("/Orders", {
+            state: { order },
+          });
+        }}
+      >
+        <Typography color={"black"} textTransform={"capitalize"}>
+          Navigate to Orders
+        </Typography>
+      </Button>
+      <Typography fontFamily={"Inter"} fontSize={"2rem"} fontWeight={800}>
+        Listado de Productos
+      </Typography>
+      {product.map((product: Product) => {
+        const filteredOrders = order.filter((item) => item.products_id === product.id);
+        return (
+          <Button
+            key={product.id}
+            onClick={() => {
+              console.log(product);
+              console.log(filteredOrders)
+              navigate("/Products", {
+                state: { product , filteredOrders},
+              });
+            }}
+          >
+            <Typography
+              key={product.id}
+              color={"black"}
+              textTransform={"capitalize"}
+            >
+              Cliente: {product.name}
             </Typography>
           </Button>
         );

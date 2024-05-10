@@ -27,88 +27,18 @@ interface Order {
 interface Props {
   data?: Order;
 }
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
 
 const Orders: React.FC<Props> = ({ data }) => {
-  //   const location = useLocation();
-  //   const { order } = location.state;
+  const location = useLocation();
+  const { order } = location.state;
+  const imprimir = () => {
+    console.log(order);
+  };
   return (
     <Container sx={{ padding: "8rem 0 0 0" }}>
       <Typography fontFamily={"Inter"} color={"#FF0101"} fontWeight={900}>
-        Client <span style={{ color: "#1C1C1C" }}>/ </span>
+        Orders /<span style={{ color: "#1C1C1C" }}> {order.id} </span>
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-around",
-          padding: "2.5rem 0 0 0",
-          width: "100%",
-          gap: "1rem",
-          flexWrap: "wrap",
-          flexBasis: "50%",
-        }}
-      >
-        <Box
-          sx={{
-            width: "15%",
-            borderRadius: "1rem",
-            boxShadow: "0 0 10px #D9D9D9",
-            padding: "2.5rem",
-            maxHeight: "1.156rem",
-          }}
-        >
-          <Typography fontFamily={"Inter"}>Cantidad</Typography>
-        </Box>
-        <Box
-          sx={{
-            width: "15%",
-            borderRadius: "1rem",
-            boxShadow: "0 0 10px #D9D9D9",
-            padding: "2.5rem",
-            maxHeight: "1.156rem",
-          }}
-        >
-          <Typography fontFamily={"Inter"}>Producto Creado</Typography>
-        </Box>
-        <Box
-          sx={{
-            width: "15%",
-            borderRadius: "1rem",
-            boxShadow: "0 0 10px #D9D9D9",
-            padding: "2.5rem",
-            maxHeight: "1.156rem",
-          }}
-        >
-          <Typography fontFamily={"Inter"}>Fecha</Typography>
-        </Box>
-        <Box
-          sx={{
-            width: "15%",
-            borderRadius: "1rem",
-            boxShadow: "0 0 10px #D9D9D9",
-            padding: "2.5rem",
-            maxHeight: "1.156rem",
-          }}
-        >
-          <Typography fontFamily={"Inter"}>Ganancias</Typography>
-        </Box>
-      </Box>
       <Box
         sx={{
           display: "flex",
@@ -120,17 +50,6 @@ const Orders: React.FC<Props> = ({ data }) => {
           margin: "1.5rem 0 0 0",
         }}
       >
-        <Box
-          sx={{
-            width: "100%",
-            display: "flex",
-            padding: "1rem",
-            borderRadius: "1rem",
-            boxShadow: "0 0 10px #D9D9D9",
-          }}
-        >
-          Hola
-        </Box>
         <Box
           sx={{
             width: "100%",
@@ -149,28 +68,39 @@ const Orders: React.FC<Props> = ({ data }) => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead sx={{ backgroundColor: "#F8F8F8" }}>
                 <TableRow>
-                  <TableCell>Dessert (100g serving)</TableCell>
-                  <TableCell align="right">Calories</TableCell>
-                  <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                  <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                  <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                  <TableCell>ID</TableCell>
+                  <TableCell align="left">ID Clients</TableCell>
+                  <TableCell align="left">ID Products</TableCell>
+                  <TableCell align="left">Details</TableCell>
+                  <TableCell align="left">Address</TableCell>
+                  <TableCell align="left">Fecha</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
-                  </TableRow>
-                ))}
+                {order.map((item: any) => {
+                  return (
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>{item.id}</Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>{item.client_name}</Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>{item.products_id}</Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>{item.details}</Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>{item.address}</Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>{item.created_at}</Typography>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>

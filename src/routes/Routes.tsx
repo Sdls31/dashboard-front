@@ -7,11 +7,18 @@ import Orders from "../components/Orders";
 import CreateOrder from "../components/createOrder";
 import CreateClient from "../components/createClient";
 import CreateProduct from "../components/createProduct";
+import CreateUser from "../components/createUser";
+import Login from "../components/login";
+import DeleteUser from "../components/deleteOrder";
+import UpdateOrders from "../components/updateOrders";
+
+
 const PagesRoutes = () => {
   return (
     <>
       <NavBar />
       <Routes>
+        
         <Route path="/Clients" element={<Home />} />
         <Route path="/" element={<OrdersGrid />} />
         <Route path="/Products" element={<Products />} />
@@ -19,6 +26,9 @@ const PagesRoutes = () => {
         <Route path="/createorder" element={<CreateOrder />} />
         <Route path="/createclient" element={<CreateClient />} />
         <Route path="/createproduct" element={<CreateProduct />} />
+        <Route path="/createuser" element={<CreateUser />} />
+        <Route path="/delete" element={<DeleteUser />} />
+        <Route path="/updateOrders" element={<UpdateOrders/>} />
       </Routes>
     </>
   );

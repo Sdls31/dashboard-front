@@ -46,12 +46,12 @@ const rows = [
 ];
 
 const Products: React.FC<Props> = ({ data }) => {
-  //   const location = useLocation();
-  //   const { order } = location.state;
+  const location = useLocation();
+  const { product, filteredOrders } = location.state;
   return (
     <Container sx={{ padding: "8rem 0 0 0" }}>
       <Typography fontFamily={"Inter"} color={"#FF0101"} fontWeight={900}>
-        Client <span style={{ color: "#1C1C1C" }}>/ </span>
+        Products <span style={{ color: "#1C1C1C" }}>/ {product.name}</span>
       </Typography>
       <Box
         sx={{
@@ -205,26 +205,24 @@ const Products: React.FC<Props> = ({ data }) => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead sx={{ backgroundColor: "#F8F8F8" }}>
                 <TableRow>
-                  <TableCell>Dessert (100g serving)</TableCell>
-                  <TableCell align="right">Calories</TableCell>
-                  <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                  <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                  <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                  <TableCell align="left">Cliente</TableCell>
+                  <TableCell align="left">Cantidad</TableCell>
+                  <TableCell align="left">Details</TableCell>
+                  <TableCell align="left">Address</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
+                {filteredOrders.map((row: any) => (
                   <TableRow
                     key={row.name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell component="th" scope="row">
-                      {row.name}
+                    <TableCell align="left">
+                      {row.client_name}
                     </TableCell>
-                    <TableCell align="right">{row.calories}</TableCell>
-                    <TableCell align="right">{row.fat}</TableCell>
-                    <TableCell align="right">{row.carbs}</TableCell>
-                    <TableCell align="right">{row.protein}</TableCell>
+                    <TableCell align="left">{row.quantity}</TableCell>
+                    <TableCell align="left">{row.details}</TableCell>
+                    <TableCell align="left">{row.address}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

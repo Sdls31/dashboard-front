@@ -15,6 +15,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useLocation } from "react-router-dom";
+import { BarChart } from "@mui/x-charts/BarChart";
 interface Order {
   id: number;
   created_at: Date;
@@ -27,32 +28,38 @@ interface Order {
 interface Props {
   data?: Order;
 }
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number
-) {
-  return { name, calories, fat, carbs, protein };
+
+
+interface Record {
+  products_id: string;
+  quantity: number;
 }
 
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
-
-const Home: React.FC<Props> = ({ data }) => {
+const Home: React.FC<Props> = () => {
   const location = useLocation();
   const { client, filteredOrders, filteredProducts } = location.state;
+
+  const quantitiesByProductId: Record = filteredOrders.reduce((accumulator:any, order:any) => {
+    const productId: string = order.products_id;
+    const quantity:number = order.quantity;
+  
+    // Si el productId ya está en el acumulador, sumar la cantidad
+    if (accumulator[productId]) {
+      accumulator[productId] += quantity;
+    } else { // Si no está, inicializarlo con la cantidad actual
+      accumulator[productId] = quantity;
+    }
+  
+    return accumulator;
+  }, {});
+
+  const xAxis = Object.keys(quantitiesByProductId);
+  const yAxis = Object.values(quantitiesByProductId)
 
   return (
     <Container sx={{ padding: "8rem 0 0 0" }}>
       <Typography fontFamily={"Inter"} color={"#FF0101"} fontWeight={900}>
-        Client{" "}
+        Client
         <span style={{ color: "#1C1C1C" }}>
           / {client.name} {client.lastname}
         </span>
@@ -70,14 +77,17 @@ const Home: React.FC<Props> = ({ data }) => {
       >
         <Box
           sx={{
-            width: "15%",
+            width: "fit-content",
             borderRadius: "1rem",
             boxShadow: "0 0 10px #D9D9D9",
             padding: "2.5rem",
             maxHeight: "1.156rem",
           }}
         >
-          <Typography fontFamily={"Inter"}>{filteredOrders.length}</Typography>
+          <Typography fontFamily={"Inter"}>
+            Cantidad de Ordenes:{" "}
+            <span style={{ fontWeight: "700" }}>{filteredOrders.length}</span>
+          </Typography>
         </Box>
         <Box
           sx={{
@@ -88,7 +98,7 @@ const Home: React.FC<Props> = ({ data }) => {
             maxHeight: "1.156rem",
           }}
         >
-          <Typography fontFamily={"Inter"}>Producto Creado</Typography>
+          <Typography fontFamily={"Inter"}></Typography>
         </Box>
         <Box
           sx={{
@@ -150,32 +160,28 @@ const Home: React.FC<Props> = ({ data }) => {
               fontWeight={600}
               textAlign={"center"}
             >
-              Nombre Cliente
+              {client.name}
             </Typography>
             <Typography
               fontFamily={"Inter"}
-              fontWeight={100}
+              fontWeight={600}
               textAlign={"center"}
-              fontSize={12.5}
             >
-              Correo Cliente
+              {client.lastname}
             </Typography>
+
             <Box sx={{ display: "flex", flexDirection: "column" }}>
-              <Typography fontFamily={"Inter"}>Group</Typography>
+              <Typography fontFamily={"Inter"}>ID</Typography>
               <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                Datos
+                {client.id}
               </Typography>
-              <Typography fontFamily={"Inter"}>Ubicacion</Typography>
+              <Typography fontFamily={"Inter"}>E-mail</Typography>
               <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                DatosUbicacion
-              </Typography>
-              <Typography fontFamily={"Inter"}>Primer pedido</Typography>
-              <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                Datospedido
+                {client.email}
               </Typography>
               <Typography fontFamily={"Inter"}>Cantidad</Typography>
               <Typography fontFamily={"Inter"} fontWeight={100} fontSize={12.5}>
-                DatosCantidad
+                {filteredOrders.length}
               </Typography>
             </Box>
           </Box>
@@ -187,9 +193,18 @@ const Home: React.FC<Props> = ({ data }) => {
             padding: "1rem",
             borderRadius: "1rem",
             boxShadow: "0 0 10px #D9D9D9",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center"
           }}
         >
-          Hola
+          <Typography fontFamily={'Inter'}>Cantidad de productos pedidos</Typography>
+           <BarChart
+            xAxis={[{ scaleType:'band', data:  xAxis}]}
+            series={[{ data : yAxis }]}
+            width={500}
+            height={300}
+          /> 
         </Box>
         <Box
           sx={{
@@ -209,15 +224,44 @@ const Home: React.FC<Props> = ({ data }) => {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead sx={{ backgroundColor: "#F8F8F8" }}>
                 <TableRow>
-                  <TableCell>Dessert (100g serving)</TableCell>
-                  <TableCell align="right">Calories</TableCell>
-                  <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                  <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-                  <TableCell align="right">Protein&nbsp;(g)</TableCell>
+                  <TableCell>ID</TableCell>
+                  <TableCell align="left">Product ID</TableCell>
+                  <TableCell align="left">Created</TableCell>
+                  <TableCell align="left">Detalles</TableCell>
+                  <TableCell align="left">Cantidad (Lotes)</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.map((row) => (
+                {filteredOrders.map((order: any) => {
+                  return (
+                    <TableRow key={order.id}>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>{order.id}</Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>
+                          {order.products_id}
+                        </Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>
+                          {order.created_at}
+                        </Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>
+                          {order.details}
+                        </Typography>
+                      </TableCell>
+                      <TableCell component="th" scope="row">
+                        <Typography fontFamily={"Inter"}>
+                          {order.quantity}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+                {/* {rows.map((row) => (
                   <TableRow
                     key={row.name}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -230,7 +274,7 @@ const Home: React.FC<Props> = ({ data }) => {
                     <TableCell align="right">{row.carbs}</TableCell>
                     <TableCell align="right">{row.protein}</TableCell>
                   </TableRow>
-                ))}
+                ))}  */}
               </TableBody>
             </Table>
           </TableContainer>
