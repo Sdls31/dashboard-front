@@ -36,4 +36,7 @@ yarn add @mui/material
 yarn add @mui/x-charts
 yarn add @mui/icons-material
 ```
-
+4. Inicializar en puerto local.
+```
+yarn dev
+```
