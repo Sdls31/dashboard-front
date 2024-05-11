@@ -22,3 +22,22 @@ Los demás archivos son propios de una app con React - TypeScript. App.tsx conti
 Se utilizan librerias como @mui/material.
 
 Para inicializar nuestra app, es importante utilizar el comando "yarn" para asi instalar las dependencias, en caso de querer instalar una libreria, se utiliza "yarn add (nombrelibreria)" y para correr es "yarn dev".
+
+# Iniciar Codigo
+1. Clonar repositorio
+2. Instalar dependencias
+```
+yarn add
+```
+
+3. Instalar material ui
+```
+yarn add @mui/material
+```
+
+4. Instalar material ui
+```
+yarn add @mui/material
+yarn add @mui/x-charts
+yarn add @mui/icons-material
+```
