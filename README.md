@@ -27,7 +27,7 @@ Para inicializar nuestra app, es importante utilizar el comando "yarn" para asi 
 1. Clonar repositorio
 2. Instalar dependencias
 ```
-yarn add
+yarn
 ```
 
 3. Instalar material ui
