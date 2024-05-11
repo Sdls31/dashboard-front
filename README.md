@@ -33,11 +33,7 @@ yarn add
 3. Instalar material ui
 ```
 yarn add @mui/material
-```
-
-4. Instalar material ui
-```
-yarn add @mui/material
 yarn add @mui/x-charts
 yarn add @mui/icons-material
 ```
+
